@@ -63,15 +63,15 @@ body {
     margin-bottom: 0;
 }
 
-/* Header Alignment Fix */
+/* Header Centering Solution */
 .table thead th {
+    position: relative;
     padding: 12px 8px !important;
     text-align: center;
     vertical-align: middle;
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
     white-space: nowrap;
-    position: relative;
 }
 
 /* Left-aligned columns */
@@ -82,10 +82,16 @@ body {
 }
 
 /* Right-aligned columns */
-.table thead th.text-end,
 .table tbody td.text-end {
     text-align: right;
     padding-right: 12px !important;
+}
+
+/* Centered header text */
+.table thead th.text-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Cell Styling */
@@ -95,22 +101,22 @@ body {
 }
 
 /* Sort Indicators */
-th.sorted-asc::after {
-    content: " ↑";
+th.sorted-asc::after,
+th.sorted-desc::after {
+    content: "";
     position: absolute;
-    right: 12px;
+    right: 8px;
     bottom: 50%;
     transform: translateY(50%);
     font-size: 12px;
 }
 
+th.sorted-asc::after {
+    content: " ↑";
+}
+
 th.sorted-desc::after {
     content: " ↓";
-    position: absolute;
-    right: 12px;
-    bottom: 50%;
-    transform: translateY(50%);
-    font-size: 12px;
 }
 
 /* Tooltips */
@@ -220,5 +226,20 @@ a:hover {
     .btn {
         padding: 0.25rem 0.5rem;
         font-size: 14px;
+    }
+    
+    .table thead th.text-center {
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    th.sorted-asc::after,
+    th.sorted-desc::after {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        transform: none;
+        display: block;
+        margin-top: 2px;
     }
 }
