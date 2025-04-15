@@ -71,5 +71,86 @@ body {
 }
 
 .table tr:nth-child(odd) {
+    background-color: var(--table-row-odd);
+}
 
+.table tr:nth-child(even) {
+    background-color: var(--table-row-even);
+}
+
+.table-hover tbody tr:hover {
+    background-color: var(--border-color);
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.btn-primary {
+    background-color: var(--btn-primary-bg);
+    color: var(--btn-primary-text);
+    border-color: var(--btn-primary-bg);
+}
+
+.btn-outline-secondary {
+    color: var(--btn-outline-text);
+    border-color: var(--btn-outline-border);
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    color: var(--alert-danger-text);
+    border-color: transparent;
+}
+
+.text-success {
+    color: #2ecc71 !important;
+    font-weight: bold;
+}
+
+.text-danger {
+    color: #e74c3c !important;
+    font-weight: bold;
+}
+
+th.sorted-asc::after {
+    content: " ↑";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+}
+
+th.sorted-desc::after {
+    content: " ↓";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+}
+
+#searchInput {
+    max-width: 300px;
+    margin-bottom: 1rem;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-color: var(--border-color);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    #searchInput {
+        max-width: 100%;
+    }
+    
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 }
