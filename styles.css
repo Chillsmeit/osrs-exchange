@@ -1,0 +1,62 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1400px;
+}
+
+h1 {
+    color: #343a40;
+}
+
+.table {
+    font-size: 14px;
+}
+
+th {
+    cursor: pointer;
+    position: relative;
+}
+
+th:hover {
+    background-color: #e9ecef;
+}
+
+th.sorted-asc::after {
+    content: " ↑";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+}
+
+th.sorted-desc::after {
+    content: " ↓";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+}
+
+.text-success {
+    font-weight: bold;
+}
+
+.text-danger {
+    font-weight: bold;
+}
+
+#searchInput {
+    width: 250px;
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        overflow-x: auto;
+    }
+    
+    #searchInput {
+        width: 150px;
+    }
+}
