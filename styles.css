@@ -62,33 +62,30 @@ body {
     width: 100%;
 }
 
-.table > :not(caption) > * > * {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    border-bottom-color: var(--border-color);
-}
-
-.table-striped > tbody > tr:nth-of-type(odd) > * {
-    --bs-table-accent-bg: var(--table-row-odd);
-    color: var(--text-color);
-}
-
-.table-hover > tbody > tr:hover > * {
-    --bs-table-accent-bg: var(--border-color);
-    color: var(--text-color);
-}
-
 /* Header Styling */
 th {
-    background-color: var(--table-header-bg) !important;
-    border-color: var(--border-color) !important;
+    text-align: center;
     white-space: nowrap;
     position: relative;
     padding-top: 28px;
     min-width: 80px;
     cursor: pointer;
+    background-color: var(--table-header-bg) !important;
+    border-color: var(--border-color) !important;
 }
 
+/* Cell Alignment */
+.text-start {
+    text-align: left !important;
+}
+.text-end {
+    text-align: right !important;
+}
+.text-center {
+    text-align: center !important;
+}
+
+/* Tooltips */
 th[title]:hover::after {
     content: attr(title);
     position: absolute;
@@ -106,6 +103,22 @@ th[title]:hover::after {
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     width: max-content;
     max-width: 200px;
+}
+
+th.sorted-asc::after {
+    content: " ↑";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
+}
+
+th.sorted-desc::after {
+    content: " ↓";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
 }
 
 .table td {
@@ -133,23 +146,6 @@ a:hover {
     border-color: var(--btn-outline-border);
 }
 
-th.sorted-asc::after {
-    content: " ↑";
-    font-size: 12px;
-    position: absolute;
-    right: 5px;
-    bottom: 8px;
-}
-
-th.sorted-desc::after {
-    content: " ↓";
-    font-size: 12px;
-    position: absolute;
-    right: 5px;
-    bottom: 8px;
-}
-
-/* Profit Coloring */
 .text-success {
     color: #2ecc71 !important;
     font-weight: bold;
