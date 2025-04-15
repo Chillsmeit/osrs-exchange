@@ -8,9 +8,12 @@ const refreshBtn = document.getElementById('refreshBtn');
 const searchInput = document.getElementById('searchInput');
 const loadingSpinner = document.getElementById('loadingSpinner');
 const priceTable = document.getElementById('priceTable');
+const errorAlert = document.getElementById('errorAlert');
+const themeToggle = document.getElementById('themeToggle');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme();
     fetchData();
     
     // Set up event listeners
@@ -27,22 +30,55 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Theme Management
+function initializeTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Set dark mode as default (unless light mode is explicitly set)
+    if (savedTheme === 'light') {
+        setLightMode();
+    } else {
+        setDarkMode();
+    }
+}
+
+function setDarkMode() {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> Dark Mode';
+}
+
+function setLightMode() {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
+    themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i> Light Mode';
+}
+
+function toggleTheme() {
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        setLightMode();
+    } else {
+        setDarkMode();
+    }
+}
+
+themeToggle.addEventListener('click', toggleTheme);
+
 async function fetchData() {
     try {
-        loadingSpinner.style.display = 'block';
-        tableBody.innerHTML = '';
+        showLoading();
+        clearError();
         
-        // Fetch all data in parallel
         const [priceData, mappingData, volumeData, gePrices] = await Promise.all([
-            fetch('https://prices.runescape.wiki/api/v1/osrs/latest').then(res => res.json()),
-            fetch('https://prices.runescape.wiki/api/v1/osrs/mapping').then(res => res.json()),
-            fetch('https://prices.runescape.wiki/api/v1/osrs/volumes').then(res => res.json()),
-            fetch('https://oldschool.runescape.wiki/?title=Module:GEPrices/data.json&action=raw&ctype=application%2Fjson').then(res => res.json())
+            fetch('https://prices.runescape.wiki/api/v1/osrs/latest').then(handleResponse),
+            fetch('https://prices.runescape.wiki/api/v1/osrs/mapping').then(handleResponse),
+            fetch('https://prices.runescape.wiki/api/v1/osrs/volumes').then(handleResponse),
+            fetch('https://oldschool.runescape.wiki/?title=Module:GEPrices/data.json&action=raw&ctype=application%2Fjson').then(handleResponse)
         ]);
         
         const natureRunePrice = priceData.data["561"]?.high || 105;
         
-        // Process data
         itemData = mappingData.map(item => {
             const id = item.id.toString();
             const price = priceData.data[id];
@@ -84,12 +120,19 @@ async function fetchData() {
         });
         
         renderTable(itemData);
-        loadingSpinner.style.display = 'none';
     } catch (error) {
+        showError(`Failed to fetch data: ${error.message}`);
         console.error('Error fetching data:', error);
-        loadingSpinner.style.display = 'none';
-        alert('Failed to fetch data. Please try again later.');
+    } finally {
+        hideLoading();
     }
+}
+
+function handleResponse(response) {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
 }
 
 function renderTable(data) {
@@ -100,7 +143,7 @@ function renderTable(data) {
         
         row.innerHTML = `
             <td>${item.id}</td>
-            <td><a href="${item.wikiLink}" target="_blank">${item.name}</a></td>
+            <td><a href="${item.wikiLink}" target="_blank" rel="noopener">${item.name}</a></td>
             <td>${formatNumber(item.gePrice)}</td>
             <td>${formatNumber(item.lowPrice)}</td>
             <td>${formatNumber(item.highPrice)}</td>
@@ -117,7 +160,6 @@ function renderTable(data) {
 }
 
 function sortTable(column) {
-    // Toggle direction if same column clicked
     if (currentSort.column === column) {
         currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
     } else {
@@ -126,16 +168,13 @@ function sortTable(column) {
     }
     
     const sortedData = [...itemData].sort((a, b) => {
-        // Handle null values
         if (a[column] === null) return currentSort.direction === 'asc' ? 1 : -1;
         if (b[column] === null) return currentSort.direction === 'asc' ? -1 : 1;
         
-        // Numeric comparison
         if (typeof a[column] === 'number' && typeof b[column] === 'number') {
             return currentSort.direction === 'asc' ? a[column] - b[column] : b[column] - a[column];
         }
         
-        // String comparison
         if (typeof a[column] === 'string' && typeof b[column] === 'string') {
             return currentSort.direction === 'asc' 
                 ? a[column].localeCompare(b[column]) 
@@ -146,8 +185,10 @@ function sortTable(column) {
     });
     
     renderTable(sortedData);
-    
-    // Update UI to show current sort
+    updateSortIndicator(column);
+}
+
+function updateSortIndicator(column) {
     const headers = priceTable.querySelectorAll('th[data-sort]');
     headers.forEach(header => {
         header.classList.remove('sorted-asc', 'sorted-desc');
@@ -186,4 +227,26 @@ function formatPercentage(num) {
 function getProfitClass(value) {
     if (value === null || value === undefined) return '';
     return value > 0 ? 'text-success' : value < 0 ? 'text-danger' : '';
+}
+
+function showLoading() {
+    loadingSpinner.style.display = 'block';
+    refreshBtn.disabled = true;
+    refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Loading...';
+}
+
+function hideLoading() {
+    loadingSpinner.style.display = 'none';
+    refreshBtn.disabled = false;
+    refreshBtn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Refresh';
+}
+
+function showError(message) {
+    errorAlert.textContent = message;
+    errorAlert.style.display = 'block';
+}
+
+function clearError() {
+    errorAlert.style.display = 'none';
+    errorAlert.textContent = '';
 }
