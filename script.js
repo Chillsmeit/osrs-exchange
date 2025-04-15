@@ -1,6 +1,8 @@
+// Global variables
 let itemData = [];
 let currentSort = { column: null, direction: 'asc' };
 
+// DOM elements
 const tableBody = document.getElementById('tableBody');
 const refreshBtn = document.getElementById('refreshBtn');
 const searchInput = document.getElementById('searchInput');
@@ -9,13 +11,16 @@ const priceTable = document.getElementById('priceTable');
 const errorAlert = document.getElementById('errorAlert');
 const themeToggle = document.getElementById('themeToggle');
 
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
     fetchData();
     
+    // Set up event listeners
     refreshBtn.addEventListener('click', fetchData);
     searchInput.addEventListener('input', filterTable);
     
+    // Set up sorting
     const headers = priceTable.querySelectorAll('th[data-sort]');
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -88,13 +93,13 @@ async function fetchData() {
             if (price) {
                 const sellPrice = price.high || 0;
                 const buyPrice = price.low || 0;
-                const saleTax = sellPrice * 0.01;
+                const saleTax = sellPrice * 0.01; // Tax applies when selling
                 const profitBeforeTax = sellPrice - buyPrice;
                 profitAfterTax = profitBeforeTax - saleTax;
                 roiAfterTax = (profitAfterTax / buyPrice) || 0;
                 
                 if (highAlch && gePrice) {
-                    alchProfit = highAlch - (gePrice + natureRuneGePrice);
+                    alchProfit = highAlch - (gePrice + natureRuneGePrice); // No tax on alching
                 }
             }
             
@@ -153,12 +158,10 @@ function renderTable(data) {
         tableBody.appendChild(row);
     });
 
+    // Force column width recalculation
     setTimeout(() => {
         priceTable.style.width = 'auto';
         priceTable.style.tableLayout = 'auto';
-        priceTable.querySelectorAll('th, td').forEach(cell => {
-            cell.style.width = 'auto';
-        });
     }, 50);
 }
 
