@@ -63,8 +63,13 @@ body {
     margin-bottom: 0;
 }
 
-/* Header Centering Solution */
+/* Header Fix - Prevent Vertical Stacking */
+.table thead tr {
+    display: table-row;
+}
+
 .table thead th {
+    display: table-cell;
     position: relative;
     padding: 12px 8px !important;
     text-align: center;
@@ -72,6 +77,7 @@ body {
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
     white-space: nowrap;
+    min-width: 80px;
 }
 
 /* Left-aligned columns */
@@ -81,7 +87,7 @@ body {
     padding-left: 12px !important;
 }
 
-/* Right-aligned columns */
+/* Right-aligned data cells */
 .table tbody td.text-end {
     text-align: right;
     padding-right: 12px !important;
@@ -89,9 +95,7 @@ body {
 
 /* Centered header text */
 .table thead th.text-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 
 /* Cell Styling */
@@ -202,6 +206,7 @@ a:hover {
     .table thead th {
         padding: 8px 4px !important;
         font-size: 14px;
+        white-space: normal; /* Allow wrapping if needed */
     }
     
     .table td {
@@ -228,18 +233,10 @@ a:hover {
         font-size: 14px;
     }
     
-    .table thead th.text-center {
-        flex-direction: column;
-        justify-content: center;
-    }
-    
+    /* Ensure sort arrows stay visible */
     th.sorted-asc::after,
     th.sorted-desc::after {
-        position: relative;
-        right: auto;
-        bottom: auto;
-        transform: none;
-        display: block;
-        margin-top: 2px;
+        right: 4px;
+        font-size: 11px;
     }
 }
