@@ -64,25 +64,24 @@ body {
 
 /* Header Styling */
 th {
-    text-align: center;
-    white-space: nowrap;
     position: relative;
-    padding-top: 28px;
+    padding: 28px 4px 8px 4px !important;
     min-width: 80px;
     cursor: pointer;
+    text-align: center;
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
+    white-space: nowrap;
 }
 
-/* Cell Alignment */
-.text-start {
-    text-align: left !important;
+/* Header Alignment */
+th.text-start {
+    text-align: left;
+    padding-left: 12px !important;
 }
-.text-end {
-    text-align: right !important;
-}
-.text-center {
-    text-align: center !important;
+th.text-end {
+    text-align: right;
+    padding-right: 12px !important;
 }
 
 /* Tooltips */
@@ -102,35 +101,42 @@ th[title]:hover::after {
     border: 1px solid var(--border-color);
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     width: max-content;
-    max-width: 200px;
+    max-width: 90%;
 }
 
 th.sorted-asc::after {
     content: " ↑";
-    font-size: 12px;
     position: absolute;
-    right: 5px;
+    right: 8px;
     bottom: 8px;
+    font-size: 12px;
 }
-
 th.sorted-desc::after {
     content: " ↓";
-    font-size: 12px;
     position: absolute;
-    right: 5px;
+    right: 8px;
     bottom: 8px;
+    font-size: 12px;
 }
 
 .table td {
     padding: 8px 12px;
     vertical-align: middle;
 }
+.text-start {
+    text-align: left !important;
+}
+.text-end {
+    text-align: right !important;
+}
+.text-center {
+    text-align: center !important;
+}
 
 a {
     color: var(--link-color);
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: underline;
 }
@@ -140,7 +146,6 @@ a:hover {
     color: var(--btn-primary-text);
     border-color: var(--btn-primary-bg);
 }
-
 .btn-outline-secondary {
     color: var(--btn-outline-text);
     border-color: var(--btn-outline-border);
@@ -150,7 +155,6 @@ a:hover {
     color: #2ecc71 !important;
     font-weight: bold;
 }
-
 .text-danger {
     color: #e74c3c !important;
     font-weight: bold;
@@ -178,18 +182,15 @@ a:hover {
     .container {
         padding: 1rem;
     }
-    
     #searchInput {
         max-width: 100%;
     }
-    
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-    
     th {
-        padding-top: 24px;
+        padding-top: 24px !important;
         font-size: 14px;
     }
 }
