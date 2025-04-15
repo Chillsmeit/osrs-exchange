@@ -45,7 +45,7 @@ body {
     padding-bottom: 2rem;
 }
 
-/* Table Styling */
+/* Table Structure */
 .table {
     --bs-table-bg: var(--card-bg);
     --bs-table-color: var(--text-color);
@@ -60,35 +60,64 @@ body {
     border-color: var(--border-color);
     table-layout: auto;
     width: 100%;
+    margin-bottom: 0;
 }
 
-/* Header Styling */
-th {
-    position: relative;
-    padding: 28px 4px 8px 4px !important;
-    min-width: 80px;
-    cursor: pointer;
+/* Header Alignment Fix */
+.table thead th {
+    padding: 12px 8px !important;
     text-align: center;
+    vertical-align: middle;
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
     white-space: nowrap;
+    position: relative;
 }
 
-/* Header Alignment */
-th.text-start {
+/* Left-aligned columns */
+.table thead th.text-start,
+.table tbody td.text-start {
     text-align: left;
     padding-left: 12px !important;
 }
-th.text-end {
+
+/* Right-aligned columns */
+.table thead th.text-end,
+.table tbody td.text-end {
     text-align: right;
     padding-right: 12px !important;
+}
+
+/* Cell Styling */
+.table td {
+    padding: 8px 12px !important;
+    vertical-align: middle;
+}
+
+/* Sort Indicators */
+th.sorted-asc::after {
+    content: " ↑";
+    position: absolute;
+    right: 12px;
+    bottom: 50%;
+    transform: translateY(50%);
+    font-size: 12px;
+}
+
+th.sorted-desc::after {
+    content: " ↓";
+    position: absolute;
+    right: 12px;
+    bottom: 50%;
+    transform: translateY(50%);
+    font-size: 12px;
 }
 
 /* Tooltips */
 th[title]:hover::after {
     content: attr(title);
     position: absolute;
-    top: 8px;
+    top: 0;
     left: 50%;
     transform: translateX(-50%);
     background-color: var(--table-header-bg);
@@ -101,65 +130,43 @@ th[title]:hover::after {
     border: 1px solid var(--border-color);
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     width: max-content;
-    max-width: 90%;
+    max-width: 200px;
 }
 
-th.sorted-asc::after {
-    content: " ↑";
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
-    font-size: 12px;
-}
-th.sorted-desc::after {
-    content: " ↓";
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
-    font-size: 12px;
-}
-
-.table td {
-    padding: 8px 12px;
-    vertical-align: middle;
-}
-.text-start {
-    text-align: left !important;
-}
-.text-end {
-    text-align: right !important;
-}
-.text-center {
-    text-align: center !important;
-}
-
+/* Link Styling */
 a {
     color: var(--link-color);
     text-decoration: none;
 }
+
 a:hover {
     text-decoration: underline;
 }
 
+/* Button Styling */
 .btn-primary {
     background-color: var(--btn-primary-bg);
     color: var(--btn-primary-text);
     border-color: var(--btn-primary-bg);
 }
+
 .btn-outline-secondary {
     color: var(--btn-outline-text);
     border-color: var(--btn-outline-border);
 }
 
+/* Profit Coloring */
 .text-success {
     color: #2ecc71 !important;
     font-weight: bold;
 }
+
 .text-danger {
     color: #e74c3c !important;
     font-weight: bold;
 }
 
+/* Search Input */
 #searchInput {
     max-width: 300px;
     margin-bottom: 1rem;
@@ -168,29 +175,50 @@ a:hover {
     border-color: var(--border-color);
 }
 
+/* Loading Spinner */
 #loadingSpinner {
     display: none;
 }
 
+/* Error Alert */
 .alert-danger {
     background-color: var(--alert-danger-bg);
     color: var(--alert-danger-text);
     border-color: transparent;
 }
 
+/* Mobile Optimizations */
 @media (max-width: 768px) {
     .container {
         padding: 1rem;
     }
+    
+    .table thead th {
+        padding: 8px 4px !important;
+        font-size: 14px;
+    }
+    
+    .table td {
+        padding: 6px 8px !important;
+        font-size: 14px;
+    }
+    
     #searchInput {
         max-width: 100%;
     }
+    
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
     }
-    th {
-        padding-top: 24px !important;
+    
+    th[title]:hover::after {
+        font-size: 11px;
+        max-width: 150px;
+    }
+    
+    .btn {
+        padding: 0.25rem 0.5rem;
         font-size: 14px;
     }
 }
