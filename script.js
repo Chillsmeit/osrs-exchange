@@ -93,13 +93,13 @@ async function fetchData() {
             if (price) {
                 const sellPrice = price.high || 0;
                 const buyPrice = price.low || 0;
-                const saleTax = sellPrice * 0.01; // Tax applies when selling
+                const saleTax = sellPrice * 0.01;
                 const profitBeforeTax = sellPrice - buyPrice;
                 profitAfterTax = profitBeforeTax - saleTax;
                 roiAfterTax = (profitAfterTax / buyPrice) || 0;
                 
                 if (highAlch && gePrice) {
-                    alchProfit = highAlch - (gePrice + natureRuneGePrice); // No tax on alching
+                    alchProfit = highAlch - (gePrice + natureRuneGePrice);
                 }
             }
             
@@ -142,17 +142,17 @@ function renderTable(data) {
         const row = document.createElement('tr');
         
         row.innerHTML = `
-            <td class="text-start">${item.id}</td>
-            <td class="text-start"><a href="${item.wikiLink}" target="_blank" rel="noopener">${item.name}</a></td>
-            <td class="text-end">${formatNumber(item.gePrice)}</td>
-            <td class="text-end">${formatNumber(item.lowPrice)}</td>
-            <td class="text-end">${formatNumber(item.highPrice)}</td>
-            <td class="text-end ${getProfitClass(item.profit)}">${formatNumber(item.profit)}</td>
-            <td class="text-end ${getProfitClass(item.roi)}">${formatPercentage(item.roi)}</td>
-            <td class="text-end">${formatNumber(item.highAlch)}</td>
-            <td class="text-end ${getProfitClass(item.alchProfit)}">${formatNumber(item.alchProfit)}</td>
-            <td class="text-end">${formatNumber(item.limit)}</td>
-            <td class="text-end">${formatNumber(item.volume)}</td>
+            <td>${item.id}</td>
+            <td><a href="${item.wikiLink}" target="_blank" rel="noopener">${item.name}</a></td>
+            <td>${formatNumber(item.gePrice)}</td>
+            <td>${formatNumber(item.lowPrice)}</td>
+            <td>${formatNumber(item.highPrice)}</td>
+            <td class="${getProfitClass(item.profit)}">${formatNumber(item.profit)}</td>
+            <td class="${getProfitClass(item.roi)}">${formatPercentage(item.roi)}</td>
+            <td>${formatNumber(item.highAlch)}</td>
+            <td class="${getProfitClass(item.alchProfit)}">${formatNumber(item.alchProfit)}</td>
+            <td>${formatNumber(item.limit)}</td>
+            <td>${formatNumber(item.volume)}</td>
         `;
         
         tableBody.appendChild(row);
