@@ -137,17 +137,17 @@ function renderTable(data) {
         const row = document.createElement('tr');
         
         row.innerHTML = `
-            <td>${item.id}</td>
-            <td><a href="${item.wikiLink}" target="_blank" rel="noopener">${item.name}</a></td>
-            <td>${formatNumber(item.gePrice)}</td>
-            <td>${formatNumber(item.lowPrice)}</td>
-            <td>${formatNumber(item.highPrice)}</td>
-            <td class="${getProfitClass(item.profit)}">${formatNumber(item.profit)}</td>
-            <td class="${getProfitClass(item.roi)}">${formatPercentage(item.roi)}</td>
-            <td>${formatNumber(item.highAlch)}</td>
-            <td class="${getProfitClass(item.alchProfit)}">${formatNumber(item.alchProfit)}</td>
-            <td>${formatNumber(item.limit)}</td>
-            <td>${formatNumber(item.volume)}</td>
+            <td class="text-start">${item.id}</td>
+            <td class="text-start"><a href="${item.wikiLink}" target="_blank" rel="noopener">${item.name}</a></td>
+            <td class="text-end">${formatNumber(item.gePrice)}</td>
+            <td class="text-end">${formatNumber(item.lowPrice)}</td>
+            <td class="text-end">${formatNumber(item.highPrice)}</td>
+            <td class="text-end ${getProfitClass(item.profit)}">${formatNumber(item.profit)}</td>
+            <td class="text-end ${getProfitClass(item.roi)}">${formatPercentage(item.roi)}</td>
+            <td class="text-end">${formatNumber(item.highAlch)}</td>
+            <td class="text-end ${getProfitClass(item.alchProfit)}">${formatNumber(item.alchProfit)}</td>
+            <td class="text-end">${formatNumber(item.limit)}</td>
+            <td class="text-end">${formatNumber(item.volume)}</td>
         `;
         
         tableBody.appendChild(row);
@@ -155,6 +155,10 @@ function renderTable(data) {
 
     setTimeout(() => {
         priceTable.style.width = 'auto';
+        priceTable.style.tableLayout = 'auto';
+        priceTable.querySelectorAll('th, td').forEach(cell => {
+            cell.style.width = 'auto';
+        });
     }, 50);
 }
 
