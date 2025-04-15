@@ -1,85 +1,8 @@
 :root {
-    /* Light Mode Colors */
-    --bg-color: #f8f9fa;
-    --text-color: #212529;
-    --card-bg: #ffffff;
-    --border-color: #dee2e6;
-    --table-header-bg: #e9ecef;
-    --table-row-odd: #ffffff;
-    --table-row-even: #f8f9fa;
-    --link-color: #0d6efd;
-    --btn-primary-bg: #0d6efd;
-    --btn-primary-text: #ffffff;
-    --btn-outline-border: #6c757d;
-    --btn-outline-text: #6c757d;
-    --alert-danger-bg: #f8d7da;
-    --alert-danger-text: #721c24;
-}
 
-[data-theme="dark"] {
-    /* Dark Mode Colors */
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --card-bg: #1e1e1e;
-    --border-color: #2d2d2d;
-    --table-header-bg: #2d2d2d;
-    --table-row-odd: #1e1e1e;
-    --table-row-even: #252525;
-    --link-color: #4dabf7;
-    --btn-primary-bg: #1971c2;
-    --btn-primary-text: #ffffff;
-    --btn-outline-border: #6c757d;
-    --btn-outline-text: #adb5bd;
-    --alert-danger-bg: #3a0d0f;
-    --alert-danger-text: #f1aeb5;
-}
-
-body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.container {
-    max-width: 1400px;
-    padding-bottom: 2rem;
-}
-
-.table {
-    background-color: var(--card-bg);
-    color: var(--text-color);
-    margin-bottom: 1rem;
-    border-color: var(--border-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.table th {
-    background-color: var(--table-header-bg);
-    border-color: var(--border-color);
-    cursor: pointer;
-    position: relative;
-    transition: background-color 0.3s ease;
-}
-
-.table th:hover {
-    background-color: var(--border-color);
-}
-
-.table td {
-    border-color: var(--border-color);
-    vertical-align: middle;
-}
-
-.table tr:nth-child(odd) {
-    background-color: var(--table-row-odd);
-}
-
-.table tr:nth-child(even) {
-    background-color: var(--table-row-even);
-}
-
-.table-hover tbody tr:hover {
-    background-color: var(--border-color);
+th {
+    background-color: var(--table-header-bg) !important;
+    border-color: var(--border-color) !important;
 }
 
 a {
@@ -116,6 +39,15 @@ a:hover {
 .text-danger {
     color: #e74c3c !important;
     font-weight: bold;
+}
+
+th[data-sort] {
+    cursor: pointer;
+    position: relative;
+}
+
+th[data-sort]:hover {
+    background-color: var(--border-color) !important;
 }
 
 th.sorted-asc::after {
