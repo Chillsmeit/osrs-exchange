@@ -70,4 +70,6 @@ body {
     vertical-align: middle;
 }
 
+.table tr:nth-child(odd) {
 
+}
