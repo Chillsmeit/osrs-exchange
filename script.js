@@ -1,8 +1,6 @@
-// Global variables
 let itemData = [];
 let currentSort = { column: null, direction: 'asc' };
 
-// DOM elements
 const tableBody = document.getElementById('tableBody');
 const refreshBtn = document.getElementById('refreshBtn');
 const searchInput = document.getElementById('searchInput');
@@ -11,16 +9,13 @@ const priceTable = document.getElementById('priceTable');
 const errorAlert = document.getElementById('errorAlert');
 const themeToggle = document.getElementById('themeToggle');
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     initializeTheme();
     fetchData();
     
-    // Set up event listeners
     refreshBtn.addEventListener('click', fetchData);
     searchInput.addEventListener('input', filterTable);
     
-    // Set up sorting
     const headers = priceTable.querySelectorAll('th[data-sort]');
     headers.forEach(header => {
         header.addEventListener('click', () => {
@@ -77,7 +72,7 @@ async function fetchData() {
             fetch('https://oldschool.runescape.wiki/?title=Module:GEPrices/data.json&action=raw&ctype=application%2Fjson').then(handleResponse)
         ]);
         
-        const natureRunePrice = priceData.data["561"]?.high || 105;
+        const natureRuneGePrice = gePrices["Nature rune"] || gePrices["nature rune"] || 105;
         
         itemData = mappingData.map(item => {
             const id = item.id.toString();
@@ -93,13 +88,13 @@ async function fetchData() {
             if (price) {
                 const sellPrice = price.high || 0;
                 const buyPrice = price.low || 0;
-                const saleTax = buyPrice * 0.01;
+                const saleTax = sellPrice * 0.01;
                 const profitBeforeTax = sellPrice - buyPrice;
                 profitAfterTax = profitBeforeTax - saleTax;
                 roiAfterTax = (profitAfterTax / buyPrice) || 0;
                 
                 if (highAlch && gePrice) {
-                    alchProfit = highAlch - ((gePrice * 1.01) + natureRunePrice);
+                    alchProfit = highAlch - (gePrice + natureRuneGePrice);
                 }
             }
             
@@ -157,6 +152,10 @@ function renderTable(data) {
         
         tableBody.appendChild(row);
     });
+
+    setTimeout(() => {
+        priceTable.style.width = 'auto';
+    }, 50);
 }
 
 function sortTable(column) {
