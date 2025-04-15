@@ -63,7 +63,7 @@ body {
     margin-bottom: 0;
 }
 
-/* Header Fix - Prevent Vertical Stacking */
+/* Header Structure */
 .table thead tr {
     display: table-row;
 }
@@ -72,7 +72,7 @@ body {
     display: table-cell;
     position: relative;
     padding: 12px 8px !important;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
@@ -80,28 +80,11 @@ body {
     min-width: 80px;
 }
 
-/* Left-aligned columns */
-.table thead th.text-start,
-.table tbody td.text-start {
-    text-align: left;
-    padding-left: 12px !important;
-}
-
-/* Right-aligned data cells */
-.table tbody td.text-end {
-    text-align: right;
-    padding-right: 12px !important;
-}
-
-/* Centered header text */
-.table thead th.text-center {
-    text-align: center;
-}
-
 /* Cell Styling */
 .table td {
     padding: 8px 12px !important;
     vertical-align: middle;
+    text-align: left;
 }
 
 /* Sort Indicators */
@@ -206,7 +189,7 @@ a:hover {
     .table thead th {
         padding: 8px 4px !important;
         font-size: 14px;
-        white-space: normal; /* Allow wrapping if needed */
+        white-space: normal;
     }
     
     .table td {
@@ -233,7 +216,6 @@ a:hover {
         font-size: 14px;
     }
     
-    /* Ensure sort arrows stay visible */
     th.sorted-asc::after,
     th.sorted-desc::after {
         right: 4px;
