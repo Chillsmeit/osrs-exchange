@@ -45,6 +45,7 @@ body {
     padding-bottom: 2rem;
 }
 
+/* Table Styling */
 .table {
     --bs-table-bg: var(--card-bg);
     --bs-table-color: var(--text-color);
@@ -57,6 +58,8 @@ body {
     --bs-table-hover-color: var(--text-color);
     color: var(--text-color);
     border-color: var(--border-color);
+    table-layout: auto;
+    width: 100%;
 }
 
 .table > :not(caption) > * > * {
@@ -75,9 +78,39 @@ body {
     color: var(--text-color);
 }
 
+/* Header Styling */
 th {
     background-color: var(--table-header-bg) !important;
     border-color: var(--border-color) !important;
+    white-space: nowrap;
+    position: relative;
+    padding-top: 28px;
+    min-width: 80px;
+    cursor: pointer;
+}
+
+th[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--table-header-bg);
+    color: var(--text-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 100;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    width: max-content;
+    max-width: 200px;
+}
+
+.table td {
+    padding: 8px 12px;
+    vertical-align: middle;
 }
 
 a {
@@ -100,12 +133,23 @@ a:hover {
     border-color: var(--btn-outline-border);
 }
 
-.alert-danger {
-    background-color: var(--alert-danger-bg);
-    color: var(--alert-danger-text);
-    border-color: transparent;
+th.sorted-asc::after {
+    content: " ↑";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
 }
 
+th.sorted-desc::after {
+    content: " ↓";
+    font-size: 12px;
+    position: absolute;
+    right: 5px;
+    bottom: 8px;
+}
+
+/* Profit Coloring */
 .text-success {
     color: #2ecc71 !important;
     font-weight: bold;
@@ -116,35 +160,22 @@ a:hover {
     font-weight: bold;
 }
 
-th[data-sort] {
-    cursor: pointer;
-    position: relative;
-}
-
-th[data-sort]:hover {
-    background-color: var(--border-color) !important;
-}
-
-th.sorted-asc::after {
-    content: " ↑";
-    font-size: 12px;
-    position: absolute;
-    right: 5px;
-}
-
-th.sorted-desc::after {
-    content: " ↓";
-    font-size: 12px;
-    position: absolute;
-    right: 5px;
-}
-
 #searchInput {
     max-width: 300px;
     margin-bottom: 1rem;
     background-color: var(--card-bg);
     color: var(--text-color);
     border-color: var(--border-color);
+}
+
+#loadingSpinner {
+    display: none;
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    color: var(--alert-danger-text);
+    border-color: transparent;
 }
 
 @media (max-width: 768px) {
@@ -159,5 +190,10 @@ th.sorted-desc::after {
     .table-responsive {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+    }
+    
+    th {
+        padding-top: 24px;
+        font-size: 14px;
     }
 }
